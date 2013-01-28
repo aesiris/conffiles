@@ -1,0 +1,19 @@
+[Unit]
+Description=AC offline
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# set parameters for battery mode
+ExecStart=/bin/sh -c 'echo 3 > /sys/class/backlight/acpi_video0/brightness'
+ExecStart=/sbin/hdparm -S 6 -B 254 /dev/sda
+ExecStart=/bin/sh -c 'for i in /sys/class/scsi_host/host*/link_power_management_policy; do echo min_power > $i; done'
+#ExecStart=/bin/sh -c 'for i in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do echo powersave > $i; done'
+
+# set parameters for AC mode
+ExecStop=/bin/sh -c 'echo 7 > /sys/class/backlight/acpi_video0/brightness'
+ExecStop=/sbin/hdparm -S 0 -B 254 /dev/sda
+ExecStop=/bin/sh -c 'for i in /sys/class/scsi_host/host*/link_power_management_policy; do echo max_performance > $i; done'
+#ExecStop=/bin/sh -c 'for i in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do echo ondemand > $i; done'
+
