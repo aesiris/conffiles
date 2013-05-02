@@ -1,5 +1,0 @@
-#KERNEL=="AC*", SUBSYSTEM=="power_supply", ATTR{online}=="0", TAG+="systemd", ENV{SYSTEMD_WANTS}="ac-offline.service"
-#KERNEL=="AC*", SUBSYSTEM=="power_supply", ATTR{online}=="1", TAG+="systemd", ENV{SYSTEMD_WANTS}="ac-online.service"
-KERNEL=="AC", SUBSYSTEM=="power_supply", ATTR{online}=="0", RUN+="/usr/bin/systemctl start ac-offline.service"
-KERNEL=="AC", SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="/usr/bin/systemctl stop ac-offline.service"
-#KERNEL=="AC", SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="/usr/bin/systemctl start ac-online.service"
